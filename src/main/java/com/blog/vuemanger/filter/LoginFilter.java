@@ -1,8 +1,6 @@
 package com.blog.vuemanger.filter;
 
-import com.blog.vuemanger.common.R;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.AntPathMatcher;
 
 import javax.servlet.*;
@@ -25,13 +23,13 @@ public class LoginFilter implements Filter {
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
         HttpServletRequest request = (HttpServletRequest) servletRequest;
         HttpServletResponse response = (HttpServletResponse) servletResponse;
-        response.setContentType("text/html;charset=utf-8");
+        response.setContentType("text/html;charset=utf-8");//解决乱码
         //1、获取本次请求的URI
         String requestURI = request.getRequestURI();
         log.info("拦截到请求：{}",requestURI);
         //定义不需要处理的请求路径(只有登录接口不被拦截)
         String[] urls = new String[]{
-                "/login/*/*",
+//                "/login/*/*"
         };
         //2、判断本次请求是否需要处理
         boolean check = check(urls, requestURI);
