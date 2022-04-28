@@ -32,8 +32,6 @@ mybatis-plus:
   global-config:
     db-config:
       id-type: assign_id
-      #过滤前缀
-      table-prefix: blog_
   #给实体包命名
   type-aliases-package: com.blog.vuemanger.pojo
 #自定义发送邮箱地址(发送者)

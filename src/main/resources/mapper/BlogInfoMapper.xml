@@ -4,4 +4,21 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.blog.vuemanger.mapper.BlogInfoMapper">
 
+    <select id="searchBlogInfo" resultMap="pageBlogInfo">
+        SELECT blog_id,blog_title,blog_content,blog_img_url,blog_create_time,
+        blog_operate,blog_typename from bloginfo
+        INNER JOIN blogtype ON bloginfo.blog_type=blogtype.blog_type
+    </select>
+    <resultMap id="pageBlogInfo" type="BlogInfo">
+        <id property="blogId" column="blog_id"></id>
+        <result property="blogTitle" column="blog_title"></result>
+        <result property="blogContent" column="blog_content"></result>
+        <result property="blogImgUrl" column="blog_img_url"></result>
+        <result property="blogCreateTime" column="blog_create_time"></result>
+        <result property="blogOperate" column="blog_operate"></result>
+        <association property="blogType" javaType="blogType">
+            <id property="blogType" column="blog_type"></id>
+            <result property="blogTypename" column="blog_typename"></result>
+        </association>
+    </resultMap>
 </mapper>

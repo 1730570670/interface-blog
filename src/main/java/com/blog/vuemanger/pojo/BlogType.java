@@ -9,11 +9,40 @@ import lombok.NoArgsConstructor;
 * 分类实体类
 * */
 @TableName("BlogType")
-@Data
-@NoArgsConstructor
-@AllArgsConstructor
+
 public class BlogType {
     @TableId
     private Integer blogType;
     private String blogTypename;
+
+    public BlogType() {
+    }
+
+    public BlogType(Integer blogType, String blogTypename) {
+        this.blogType = blogType;
+        this.blogTypename = blogTypename;
+    }
+
+    public Integer getBlogType() {
+        return blogType;
+    }
+
+    public void setBlogType(Integer blogType) {
+        this.blogType = blogType;
+    }
+
+    public String getBlogTypename() {
+        return blogTypename;
+    }
+
+    public void setBlogTypename(String blogTypename) {
+        this.blogTypename = blogTypename;
+    }
+    /*
+    * 重写toString方法,只返回一类型
+    * */
+    @Override
+    public String toString() {
+        return blogTypename;
+    }
 }
