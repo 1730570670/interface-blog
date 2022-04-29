@@ -22,4 +22,9 @@ public class BlogInfoServiceImpl extends ServiceImpl<BlogInfoMapper, BlogInfo> i
     public Page<BlogInfo> searchBlogInfo(Page<BlogInfo> page) {
         return mapper.searchBlogInfo(page);
     }
+
+    @Override
+    public boolean saveMyBlog(String blogTitle, String blogType, String blogImgUrl,String blogContent, int opID) {
+        return mapper.saveMyBlog(blogTitle,blogType,blogImgUrl,blogContent,opID);
+    }
 }

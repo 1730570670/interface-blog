@@ -6,4 +6,5 @@ import com.blog.vuemanger.pojo.BlogType;
 * 分类
 * */
 public interface BlogTypeService extends IService<BlogType> {
+    int searchTypeName(String typeName);
 }

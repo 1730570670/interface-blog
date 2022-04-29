@@ -16,4 +16,6 @@ import org.springframework.stereotype.Repository;
 public interface BlogInfoMapper extends BaseMapper<BlogInfo> {
     //查询博客<分页>
     Page<BlogInfo> searchBlogInfo(Page<BlogInfo> page);
+    //新增博客信息
+    boolean saveMyBlog(String blogTitle,String blogType,String blogImgUrl,String blogContent,int opID);
 }

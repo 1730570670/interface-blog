@@ -3,7 +3,15 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.blog.vuemanger.mapper.BlogInfoMapper">
+    <!--增加博客信息-->
+    <insert id="saveMyBlog">
+        INSERT INTO bloginfo (blog_title,blog_type,blog_img_url,blog_content,blog_operate)
+        value (#{blogTitle},#{blogType},#{blogImgUrl},#{blogContent},${opID})
+    </insert>
 
+    <!--
+        多表联查博客信息
+    -->
     <select id="searchBlogInfo" resultMap="pageBlogInfo">
         SELECT blog_id,blog_title,blog_content,blog_img_url,blog_create_time,
         blog_operate,blog_typename from bloginfo
