@@ -28,7 +28,7 @@ import java.util.logging.SimpleFormatter;
 @RequestMapping("/login")
 @CrossOrigin
 public class AdminLoginController {
-    //注入邮箱发送着
+    //注入邮箱发送者
     @Value("${vuemanger.emailfrom}")
     private String EmailForm;
     //注入邮箱发送

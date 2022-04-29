@@ -27,9 +27,10 @@ public class LoginFilter implements Filter {
         //1、获取本次请求的URI
         String requestURI = request.getRequestURI();
         log.info("拦截到请求：{}",requestURI);
-        //定义不需要处理的请求路径(只有登录接口不被拦截)
+        //定义不需要处理的请求路径(只有登录接口不被拦截)测试阶段都不拦截
         String[] urls = new String[]{
-                "/login/*/*"
+//                "/login/*/*"
+                "/**"
         };
         //2、判断本次请求是否需要处理
         boolean check = check(urls, requestURI);

@@ -11,25 +11,16 @@ import lombok.NoArgsConstructor;
 @TableName("BlogType")
 
 public class BlogType {
-    @TableId
-    private Integer blogType;
     private String blogTypename;
 
     public BlogType() {
     }
 
-    public BlogType(Integer blogType, String blogTypename) {
-        this.blogType = blogType;
+    public BlogType(String blogTypename) {
         this.blogTypename = blogTypename;
     }
 
-    public Integer getBlogType() {
-        return blogType;
-    }
 
-    public void setBlogType(Integer blogType) {
-        this.blogType = blogType;
-    }
 
     public String getBlogTypename() {
         return blogTypename;

@@ -17,7 +17,6 @@
         <result property="blogCreateTime" column="blog_create_time"></result>
         <result property="blogOperate" column="blog_operate"></result>
         <association property="blogType" javaType="blogType">
-            <id property="blogType" column="blog_type"></id>
             <result property="blogTypename" column="blog_typename"></result>
         </association>
     </resultMap>

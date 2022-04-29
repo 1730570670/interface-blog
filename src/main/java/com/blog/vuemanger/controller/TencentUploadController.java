@@ -22,7 +22,6 @@ import java.util.UUID;
 
 @RestController
 @Slf4j
-@CrossOrigin (origins = "*",maxAge = 3600)
 @RequestMapping(value = "/upload")
 public class TencentUploadController {
     @Autowired
@@ -79,6 +78,6 @@ public class TencentUploadController {
     }
     @PostMapping("/success")
     public String returnUpload(){
-        return "上传成功";
+        return "success";
     }
 }
