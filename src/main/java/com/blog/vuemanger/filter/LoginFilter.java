@@ -24,6 +24,8 @@ public class LoginFilter implements Filter {
         HttpServletRequest request = (HttpServletRequest) servletRequest;
         HttpServletResponse response = (HttpServletResponse) servletResponse;
         response.setContentType("text/html;charset=utf-8");//解决乱码
+        request.setCharacterEncoding("UTF-8");
+        response.setCharacterEncoding("UTF-8");
         //1、获取本次请求的URI
         String requestURI = request.getRequestURI();
         log.info("拦截到请求：{}",requestURI);

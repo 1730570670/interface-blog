@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.blog.vuemanger.common.R;
 import com.blog.vuemanger.pojo.BlogInfo;
 import com.blog.vuemanger.pojo.BlogType;
+import com.blog.vuemanger.pojo.saveBlogInfo;
 import com.blog.vuemanger.service.BlogInfoService;
 import com.blog.vuemanger.service.BlogTypeService;
 import lombok.extern.slf4j.Slf4j;
@@ -47,15 +48,13 @@ public class BlogInfoController {
     /*
     * 发布博客接口
     * */
-    @PostMapping("/save/{blogTitle}/{blogType}/{blogImgUrl}/{blogContent}/{opID}")
-    public boolean pubBlog(
-            @PathVariable String blogTitle,@PathVariable String blogType,
-            @PathVariable String blogImgUrl,@PathVariable String blogContent,
-            @PathVariable int opID){
-
-        System.out.println(blogTitle+blogType+blogImgUrl);
-        boolean isSave = blogService.saveMyBlog(blogTitle, blogType, blogImgUrl,blogContent,opID);
-        return true;
+    @PostMapping(path = "/save")
+    public R<String> pubBlog(@RequestBody saveBlogInfo saveBlogInfo){
+        int i = typeService.searchTypeName(saveBlogInfo.getBlogType());
+        boolean isSave = blogService.saveMyBlog(saveBlogInfo.getBlogTitle(),
+                i, saveBlogInfo.getBlogImgUrl(),
+                saveBlogInfo.getBlogContent(),saveBlogInfo.getBlogOperate());
+        return R.success("数据");
     }
 
 }
