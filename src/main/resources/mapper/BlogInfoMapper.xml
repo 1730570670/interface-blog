@@ -20,7 +20,7 @@
     <!--
         根据ID查询信息
     -->
-    <select id="searchById" resultType="BlogInfo">
+    <select id="searchById" resultMap="pageBlogInfo">
         SELECT blog_id,blog_title,blog_content,blog_img_url,blog_create_time,
         blog_operate,blog_typename from bloginfo
         INNER JOIN blogtype ON bloginfo.blog_type=blogtype.blog_type where blog_id=${blogId}
