@@ -56,5 +56,13 @@ public class BlogInfoController {
                 saveBlogInfo.getBlogContent(),saveBlogInfo.getBlogOperate());
         return R.success("数据");
     }
+    /*
+    * 根据ID进行查询信息
+    * */
+    @GetMapping("/blogId/{blogId}")
+    public R<BlogInfo> searchByID(@PathVariable int blogId){
+        BlogInfo blogInfo = blogService.searchByID(blogId);
+        return R.success(blogInfo);
+    }
 
 }

@@ -13,4 +13,9 @@ public interface BlogInfoService extends IService<BlogInfo> {
     * 新增博客信息
     * */
     boolean saveMyBlog(String blogTitle,int blogType,String blogImgUrl,String blogContent,int opID);
+
+    /*
+    * 根据ID进行查询信息
+    * */
+    BlogInfo searchByID(int blogId);
 }

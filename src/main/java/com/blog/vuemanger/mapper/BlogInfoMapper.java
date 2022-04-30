@@ -18,4 +18,6 @@ public interface BlogInfoMapper extends BaseMapper<BlogInfo> {
     Page<BlogInfo> searchBlogInfo(Page<BlogInfo> page);
     //新增博客信息
     boolean saveMyBlog(String blogTitle,int blogType,String blogImgUrl,String blogContent,int opID);
+    //根据ID进行查询信息
+    BlogInfo searchById(int id);
 }
