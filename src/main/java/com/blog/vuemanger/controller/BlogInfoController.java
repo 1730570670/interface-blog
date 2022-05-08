@@ -25,31 +25,38 @@ import java.util.Map;
 public class BlogInfoController {
     @Autowired
     private BlogInfoService blogService;
-
     @Autowired
     private BlogTypeService typeService;
-
-    /*
-    * 分页查询接口,分页查询,接收参数为查询第几页(一页八个内容)
-    * */
+    /**
+     *分页显示博客数据  查询博客信息
+     * @param pageCurrent
+     * @return
+     */
     @PostMapping("/{pageCurrent}")
     public R<Page<BlogInfo>> blogInfos(@PathVariable int pageCurrent){
-        //设置分页数量为一页八条数据,第几页为参数
-        Page<BlogInfo> page=new Page<>(pageCurrent,8);
+        //设置分页数量为一页六条数据,第几页为参数
+        Page<BlogInfo> page=new Page<>(pageCurrent,6);
         Page<BlogInfo> infoPage = blogService.searchBlogInfo(page);
         return R.success(infoPage);
     }
-    /*
-    * 查询博客分类接口
-    * */
+
+    /**
+     * 查询博客分类接口
+     * @return
+     */
     @GetMapping("/type")
     public R<List<BlogType>> blogType(){
         List<BlogType> types = typeService.list();
         return R.success(types);
     }
-    /*
-    * 发布博客接口
-    * */
+
+    /**
+     * 发布博客接口
+     * blogTitle 标题,blogContent 内容,blogImgUrl 头像地址(链接),
+     * blogType(分类,前端传int类型),blogOperate 操作者(可选 必须 int)
+     * @param saveBlogInfo
+     * @return
+     */
     @PostMapping(path = "/save")
     public R<Boolean> pubBlog(@RequestBody saveBlogInfo saveBlogInfo){
         int i = typeService.searchTypeName(saveBlogInfo.getBlogType());
@@ -58,18 +65,23 @@ public class BlogInfoController {
                 saveBlogInfo.getBlogContent(),saveBlogInfo.getBlogOperate());
         return R.success(isSave);
     }
-    /*
-    * 根据ID进行查询信息
-    * */
+
+    /**
+     * 根据ID进行查询信息
+     * @param blogId
+     * @return
+     */
     @GetMapping("/blogId/{blogId}")
     public R<BlogInfo> searchByID(@PathVariable int blogId){
         BlogInfo blogInfo = blogService.searchByID(blogId);
         return R.success(blogInfo);
     }
-    /*
-    * 添加分类的接口
-    * blogTypename 传来的分类名字参数
-    * */
+
+    /**
+     * 添加分类的接口
+     * @param blogTypename
+     * @return
+     */
     @GetMapping("/saveType/{blogTypename}")
     public Boolean saveType(@PathVariable String blogTypename){
         //将传来的分类名查询,看是可否存在,
@@ -88,11 +100,13 @@ public class BlogInfoController {
         boolean save = typeService.save(blogType);
         return save;
     }
-    /*
-    * 修改分类
-    * blogTypename 传来旧分类名字参数
-    * newblogTypename 传来旧分类名字参数
-    * */
+
+    /**
+     * 修改分类
+     * @param blogTypename
+     * @param newBlogTypename
+     * @return
+     */
     @GetMapping("/updateType/{blogTypename}/{newBlogTypename}")
     public Object updateBlogType(@PathVariable String blogTypename, @PathVariable String newBlogTypename){
         //将传来的分类名查询,看是可否存在,
@@ -112,9 +126,12 @@ public class BlogInfoController {
         boolean update = typeService.update(updateWrapper);
         return R.success(update);
     }
-    /*
-    * 删除分类
-    * */
+
+    /**
+     *
+     * @param blogTypename
+     * @return
+     */
     @GetMapping("/deleteType/{blogTypename}")
     public R<Boolean> deleteType(@PathVariable String blogTypename){
         Map<String,Object> map=new HashMap<>();
