@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.blog.vuemanger.mapper.AdmininfoMapper">
+
+    <resultMap id="BaseResultMap" type="com.blog.vuemanger.pojo.Admininfo">
+            <result property="adminName" column="admin_name" jdbcType="VARCHAR"/>
+            <result property="penguin" column="penguin" jdbcType="VARCHAR"/>
+            <result property="weChat" column="we_chat" jdbcType="VARCHAR"/>
+            <result property="eMail" column="e_mail" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        admin_name,penguin,we_chat,
+        e_mail
+    </sql>
+</mapper>

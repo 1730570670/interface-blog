@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.blog.vuemanger.mapper.MangerinfoMapper">
+
+    <resultMap id="BaseResultMap" type="com.blog.vuemanger.pojo.MangerInfo">
+            <id property="mangerId" column="manger_id" jdbcType="INTEGER"/>
+            <result property="ipAddress" column="ip_address" jdbcType="INTEGER"/>
+            <result property="areaAddress" column="area_address" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        manger_id,ip_address,area_address
+    </sql>
+</mapper>

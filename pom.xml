@@ -75,6 +75,7 @@
         </dependency>
 
     </dependencies>
+
     <!-- 构建工具 -->
     <build>
         <plugins>
@@ -84,5 +85,4 @@
             </plugin>
         </plugins>
     </build>
-
 </project>
