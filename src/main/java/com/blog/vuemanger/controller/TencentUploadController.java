@@ -28,11 +28,12 @@ public class TencentUploadController {
     private TencentConfig tencentConfig;
 
     /**
-     * 上传腾讯云服务器（https://cloud.tencent.com/document/product/436/10199）
+     * 上传文件接口
+     * @param file
      * @return
      */
     @PostMapping
-    public Object Upload(MultipartFile file, @PathParam("firstName") String firstName, HttpSession session) {
+    public Object Upload(MultipartFile file) {
         System.out.println(file);
         if (file == null) {
             return new UploadMsg(0, "文件为空", null);
@@ -76,6 +77,11 @@ public class TencentUploadController {
             cosclient.shutdown();
         }
     }
+
+    /**
+     * 上传成功接口
+     * @return
+     */
     @PostMapping("/success")
     public String returnUpload(){
         return "success";

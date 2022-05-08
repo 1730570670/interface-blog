@@ -38,7 +38,13 @@ public class AdminLoginController {
     @Autowired
     private AdminLoginService service;
 
-    //登录接口
+    /**
+     * 登录接口
+     * @param request
+     * @param adminLogin
+     * @param mailMessage
+     * @return
+     */
     @PostMapping("/{userName}/{userPassword}")
     public R<String> login(HttpServletRequest request, Adminlogin adminLogin, SimpleMailMessage mailMessage){
         log.info("登录接口被请求");
@@ -68,10 +74,12 @@ public class AdminLoginController {
         LoginFilter.grade=userInfo.getGrade();//更改登陆状态为登录
         return R.success((adminLogin.getUserName()));
     }
-    /*
-    * 退出登录接口
-    * */
 
+    /**
+     * 退出登录接口
+     * @param session
+     * @return
+     */
     @GetMapping
     public R<String> backLogin(HttpSession session){
         LoginFilter.grade=0;//将登陆状态变为0

@@ -17,7 +17,7 @@ public class Admininfo implements Serializable {
     /**
      * 
      */
-    private String adminName;
+    private String userName;
 
     /**
      * 

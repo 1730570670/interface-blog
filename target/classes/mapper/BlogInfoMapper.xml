@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.blog.vuemanger.mapper.BlogInfoMapper">
+    <!--增加博客信息-->
+    <insert id="saveMyBlog">
+        INSERT INTO bloginfo (blog_title,blog_type,blog_img_url,blog_content,blog_operate)
+        value (#{blogTitle},#{blogType},#{blogImgUrl},#{blogContent},${opID})
+    </insert>
+
+    <!--
+        多表联查博客信息 降序查询信息
+    -->
+    <select id="searchBlogInfo" resultMap="pageBlogInfo">
+        SELECT blog_id,blog_title,blog_content,blog_img_url,blog_create_time,
+        blog_operate,blog_typename from bloginfo
+        INNER JOIN blogtype ON bloginfo.blog_type=blogtype.blog_type
+        ORDER BY blog_create_time DESC
+    </select>
+    <!--
+        根据ID查询信息
+    -->
+    <select id="searchById" resultMap="pageBlogInfo">
+        SELECT blog_id,blog_title,blog_content,blog_img_url,blog_create_time,
+        blog_operate,blog_typename from bloginfo
+        INNER JOIN blogtype ON bloginfo.blog_type=blogtype.blog_type where blog_id=${blogId}
+    </select>
+
+
+
+
+    <!--  多对一查询信息(多表联查)  -->
+    <resultMap id="pageBlogInfo" type="BlogInfo">
+        <id property="blogId" column="blog_id"></id>
+        <result property="blogTitle" column="blog_title"></result>
+        <result property="blogContent" column="blog_content"></result>
+        <result property="blogImgUrl" column="blog_img_url"></result>
+        <result property="blogCreateTime" column="blog_create_time"></result>
+        <result property="blogOperate" column="blog_operate"></result>
+        <association property="blogType" javaType="blogType">
+            <result property="blogTypename" column="blog_typename"></result>
+        </association>
+    </resultMap>
+</mapper>

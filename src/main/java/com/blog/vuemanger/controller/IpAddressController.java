@@ -24,20 +24,35 @@ public class IpAddressController {
 
     @Autowired
     private MangerinfoService mangerinfoService;//后天业务层
-    /*
-    * 后台的访问记录
-    *
-    * return 返回结果
-    * */
+
+
+    /**
+     * ipAddress IP地址,areaAddress 地区
+     * @param frontInfo
+     * @return
+     */
+    @GetMapping
+    public R<String> front(@RequestBody FrontInfo frontInfo){
+        boolean save = frontinfoService.save(frontInfo);
+        return R.success("添加访客记录成功");
+    }
+
+    /**
+     * ipAddress IP地址,areaAddress 地区
+     * @param mangerInfo
+     * @return
+     */
     @PostMapping
     public R<String> manger(@RequestBody MangerInfo mangerInfo){
         boolean save = mangerinfoService.save(mangerInfo);
         return R.success("添加访客记录成功");
     }
 
-    /*
-    * 查询所有前台的访客记录
-    * */
+    /**
+     * 查询所有前台的访客记录
+     * @param pageCurrent
+     * @return
+     */
     @GetMapping("/front/{pageCurrent}")
     public R<Page<FrontInfo>> frontVisitor(@PathVariable int pageCurrent){
         //一页十个数量
@@ -48,9 +63,12 @@ public class IpAddressController {
         Page<FrontInfo> pageInfo = frontinfoService.page(page, queryWrapper);
         return R.success(pageInfo);
     }
-    /*
+
+    /**
      * 查询所有后台的访客记录
-     * */
+     * @param pageCurrent
+     * @return
+     */
     @GetMapping("/manger/{pageCurrent}")
     public R<Page<MangerInfo>> mangerVisitor(@PathVariable int pageCurrent){
         //一页十个数量
