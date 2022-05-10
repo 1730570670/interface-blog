@@ -35,7 +35,7 @@ public class BlogInfoController {
     @PostMapping("/{pageCurrent}")
     public R<Page<BlogInfo>> blogInfos(@PathVariable int pageCurrent){
         //设置分页数量为一页六条数据,第几页为参数
-        Page<BlogInfo> page=new Page<>(pageCurrent,6);
+        Page<BlogInfo> page=new Page<>(pageCurrent,8);
         Page<BlogInfo> infoPage = blogService.searchBlogInfo(page);
         return R.success(infoPage);
     }
@@ -67,7 +67,28 @@ public class BlogInfoController {
     }
 
     /**
-     * 根据ID进行查询信息
+     * 修改博客内容
+     * blogTitle 标题,blogType 分类,blogImgUrl 头像地址,blogContent 文章内容
+     * blogId 博客ID
+     * @param blogInfo
+     * @return
+     */
+    @PostMapping(path = "/updateBlog/{blogId}")
+    public R<Boolean> updateBlog(@RequestBody saveBlogInfo blogInfo, @PathVariable String blogId){
+        //前端传来的值为String(多表联查),而主表为int关联,根据名字查询分类ID
+        int type = typeService.searchTypeName(blogInfo.getBlogType());//查询分类ID
+        UpdateWrapper<BlogInfo> updateWrapper=new UpdateWrapper<>();
+        updateWrapper.eq("blog_id",blogId);//对应条件,根据ID进行修改
+        updateWrapper.set("blog_title",blogInfo.getBlogTitle());//标题
+        updateWrapper.set("blog_img_url",blogInfo.getBlogImgUrl());//图片地址
+        updateWrapper.set("blog_content",blogInfo.getBlogContent());//文章内容
+        updateWrapper.set("blog_type",type);//分类(int)
+        boolean update = blogService.update(updateWrapper);//修改状态
+        return R.success(update);
+    }
+
+    /**
+     * 根据ID进行查询博客信息
      * @param blogId
      * @return
      */
@@ -78,8 +99,19 @@ public class BlogInfoController {
     }
 
     /**
+     * 根据ID对博客信息进行删除
+     * @param blogId 前端传入ID信息
+     * @return
+     */
+    @PostMapping("/deleteBlog/{blogId}")
+    public R<Boolean> deleteBlogById(@PathVariable int blogId){
+        boolean b = blogService.removeById(blogId);//对信息进行删除
+        return R.success(b);
+    }
+
+    /**
      * 添加分类的接口
-     * @param blogTypename
+     * @param blogTypename 需要添加的分类名
      * @return
      */
     @GetMapping("/saveType/{blogTypename}")
@@ -103,8 +135,8 @@ public class BlogInfoController {
 
     /**
      * 修改分类
-     * @param blogTypename
-     * @param newBlogTypename
+     * @param blogTypename 旧分类名
+     * @param newBlogTypename  新分类名
      * @return
      */
     @GetMapping("/updateType/{blogTypename}/{newBlogTypename}")
@@ -127,7 +159,7 @@ public class BlogInfoController {
         return R.success(update);
     }
 
-    /**
+    /**根据分类名删除分类
      *
      * @param blogTypename
      * @return
@@ -139,4 +171,5 @@ public class BlogInfoController {
         boolean remove = typeService.removeByMap(map);
         return R.success(remove);
     }
+
 }

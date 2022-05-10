@@ -1,6 +1,6 @@
 package com.blog.vuemanger.controller;
 
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+
 import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.blog.vuemanger.common.R;
 import com.blog.vuemanger.pojo.Admininfo;
@@ -24,8 +24,7 @@ public class AdminInfoController {
      */
     @GetMapping
     public R<Admininfo> GetInfo(){
-        QueryWrapper<Admininfo> queryWrapper=new QueryWrapper<>();
-        Admininfo one = admininfoService.getOne(queryWrapper);
+        Admininfo one = admininfoService.getOne(null);
         return R.success(one);
     }
 
