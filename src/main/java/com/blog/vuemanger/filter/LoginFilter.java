@@ -2,7 +2,6 @@ package com.blog.vuemanger.filter;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.util.AntPathMatcher;
-
 import javax.servlet.*;
 import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.HttpServletRequest;
@@ -19,6 +18,7 @@ public class LoginFilter implements Filter {
     public static int grade=0;
     //路径匹配器，支持通配符
     private static final AntPathMatcher PATH_MATCHER =new AntPathMatcher();
+
     @Override
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
         HttpServletRequest request = (HttpServletRequest) servletRequest;
@@ -31,8 +31,11 @@ public class LoginFilter implements Filter {
         log.info("拦截到请求：{}",requestURI);
         //定义不需要处理的请求路径(只有登录接口不被拦截)测试阶段都不拦截
         String[] urls = new String[]{
-//                "/login/*/*"
-                "/**"
+                "/login/**",//登录接口
+                "/ipAddress/**",//IP地址接口
+                "/blog/*",//查询分类,发布(图片不能上传用不了),博客接口
+                "/blogId/*",//根据ID查询博客信息
+                "/AdminInfo"//根据博客ID查询接口
         };
         //2、判断本次请求是否需要处理
         boolean check = check(urls, requestURI);
@@ -42,15 +45,15 @@ public class LoginFilter implements Filter {
             filterChain.doFilter(request,response);
             return;
         }
-        //判断登录状态，如果已登录，则直接放行
-        if(grade != 0){
-            log.info("用户已登录");
+        //判断登录状态,如果是管理员,则直接放行
+        if(LoginFilter.grade == 0){
+            log.info("用户是管理员");
             filterChain.doFilter(request,response);
             return;
         }
-        log.info("用户未登录");
-            //5、如果未登录则返回未登录结果，通过输出流方式向客户端页面响应数据
-            response.getWriter().write("请求接口失败,请登录重试");
+        log.info("用户不是管理员");
+        //5、如果未登录则返回未登录结果，通过输出流方式向客户端页面响应数据
+        response.getWriter().write("请求接口失败,请登录重试");
         return;
     }
 

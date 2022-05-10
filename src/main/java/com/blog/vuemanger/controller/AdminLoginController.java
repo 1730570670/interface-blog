@@ -13,7 +13,6 @@ import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSenderImpl;
 import org.springframework.util.DigestUtils;
 import org.springframework.web.bind.annotation.*;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
@@ -56,10 +55,12 @@ public class AdminLoginController {
         queryWrapper.eq("user_password",userPassword);
         //条件查询
         Adminlogin userInfo = service.getOne(queryWrapper);
+        session.setAttribute("grade",userInfo.getGrade());
         //没有找到账号return
         if(userInfo==null){
             return R.error("账号或密码错误");
         }
+        LoginFilter.grade=userInfo.getGrade();//将权限等级信息交给过滤器
         //发送邮箱
         mailMessage.setSubject("欢迎访问顾寒的blog管理系统");//发送标题
         String text="尊敬的"+userInfo.getUserName()+"你好,你在北京时间" +
@@ -68,7 +69,6 @@ public class AdminLoginController {
         mailMessage.setTo(userInfo.getEmailAddress());//接收者
         mailMessage.setFrom(EmailForm);//发送者
         sender.send(mailMessage);//发送
-        LoginFilter.grade=userInfo.getGrade();//更改登陆状态为登录
         return R.success((adminLogin.getUserName()));
     }
 
@@ -79,7 +79,7 @@ public class AdminLoginController {
      */
     @GetMapping
     public R<String> backLogin(HttpSession session){
-        LoginFilter.grade=0;//将登陆状态变为0
+        LoginFilter.grade=3;
         return R.success("退出成功");
     }
 }
